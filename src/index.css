@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.search {
+  border: 2px solid #ccc;
+  margin: 1rem 8rem 5rem 8rem;
+  background-color: #013f7c;
+  color: white;
+}
+
+.searchBar {
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.searchItem {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 8rem 1rem 8rem;
+  padding: 10px 10px;
+}
+.searchItem button {
+  border-radius: 5px;
+  font-size: 17px;
+  background-color: #0259b1;
+  color: white;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table {
+  width: 80%;
+  margin: auto;
+}
+tbody {
+  text-align: center;
+}
+tr:hover {
+  background-color: #d6eeee;
+}
+.create {
+  position: relative;
+  bottom: 40px;
+  right: 10%;
+}
+
+.create button {
+  background-color: #013f7c;
+  color: white;
+  font-size: 25px;
+  padding: 3px 5px;
+}
+
+.modal {
+  border: 2px solid #ccc;
+  max-width: 70%;
+  margin: auto;
+  margin-top: 4%;
+}
+.modal__header {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+.modal__header button {
+  margin: 10px 0 10px 0;
+  padding: 16px;
+}
+.modal__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+.actions {
+  max-width: 20%;
+  margin-right: 80%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+.confirm {
+  background-color: #013f7c;
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+}
+.delete {
+  background-color: #7c0101;
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+}
