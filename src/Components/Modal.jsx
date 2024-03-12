@@ -1,29 +1,87 @@
-function Modal() {
+import axios from "axios";
+
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+function Modal({ addUsers, open, onOpen }) {
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [numberCode, setNumberCode] = useState("");
+
+  if (!open) return null;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!name || !lastName || !numberCode)
+      return toast.error("تمامی مقادیر را پرکنید.");
+
+    async function createUser() {
+      const newUsers = {
+        name,
+        lastName,
+        numberCode,
+      };
+      addUsers(newUsers);
+      try {
+        const { data } = await axios.post("http://localhost:5000/users", {
+          name: name,
+          lastName: lastName,
+          numberCode: numberCode,
+        });
+        console.log(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+    createUser();
+  }
   return (
     <div className="modal">
       <div className="modal__header">
         <h2>افزودن</h2>
-        <button>بستن</button>
-      </div>
-      <div className="modal__item">
-        <div>
-          <label htmlFor="name"> نام</label>
-          <input type="text" name="name" />
-        </div>
-        <div>
-          <label htmlFor="name">نام خانوادگی</label>
-          <input type="text" name="Lastname" />
-        </div>
-        <div>
-          <label htmlFor="name"> کدملی</label>
-          <input type="text" name="numberCode" />
-        </div>
       </div>
 
-      <div className="actions">
-        <button className="confirm"> تائید </button>
-        <button className="delete"> بستن </button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="modal__item">
+          <div>
+            <label htmlFor="name"> نام</label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="Lastname">نام خانوادگی</label>
+            <input
+              type="text"
+              name="Lastname"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="numberCode"> کدملی</label>
+            <input
+              type="number"
+              name="numberCode"
+              value={numberCode}
+              onChange={(e) => setNumberCode(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="actions">
+          <button className="confirm" type="submit">
+            تائید
+          </button>
+          <button className="delete" onClick={() => onOpen(false)}>
+            بستن
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

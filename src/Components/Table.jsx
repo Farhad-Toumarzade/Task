@@ -5,6 +5,7 @@ import Modal from "./Modal";
 function Table() {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((res) => {
       setColumns(Object.keys(res.data[0]));
@@ -12,10 +13,16 @@ function Table() {
     });
   }, []);
 
+  const [users, setUsers] = useState({});
+  const handleAddUsers = (newUsers) => {
+    setUsers((prevUsers) => [{ ...prevUsers, newUsers }]);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
       <div className="create">
-        <button>افزودن</button>
+        <button onClick={() => setIsOpen((is) => !is)}>افزودن</button>
       </div>
 
       <table>
@@ -25,7 +32,7 @@ function Table() {
               <th key={i}>{c}</th>
             ))}
 
-            <th>عملیات</th>
+            <th colSpan={3}>عملیات</th>
           </tr>
         </thead>
         <tbody>
@@ -33,17 +40,42 @@ function Table() {
             <tr key={i}>
               <td>{d.id}</td>
               <td>{d.name}</td>
-              <td>{d.Lastname}</td>
+              <td>{d.lastName}</td>
               <td>{d.numberCode}</td>
-              <td>ویرایش/حذف</td>
+              <td>
+                <button>مشاهده</button>
+              </td>
+              <td>
+                <button>ویرایش</button>
+              </td>
+              <td>
+                <button>حذف</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <Modal />
+      <Modal addUsers={handleAddUsers} open={isOpen} onOpen={setIsOpen} />
     </div>
   );
 }
 
 export default Table;
+
+// export function Show() {
+//   const[show,setShow]=useState([])
+
+//   useEffect(()=>{
+//   axios.get('http://localhost:5000/users').then(res=> setShow(res.show)).catch(err => console.log(err);)
+//   },[])
+
+//     return (
+//       <div>
+//           <div>
+//               {}
+//           </div>
+//       </div>
+
+//     )
+//   }
