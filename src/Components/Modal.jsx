@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-function Modal({ addUsers, open, onOpen }) {
+function ModalAdd({ addUsers, open, onOpen }) {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [numberCode, setNumberCode] = useState("");
@@ -45,7 +45,7 @@ function Modal({ addUsers, open, onOpen }) {
       <form onSubmit={handleSubmit}>
         <div className="modal__item">
           <div>
-            <label htmlFor="name"> نام</label>
+            <label htmlFor="name"> نام</label>&nbsp;
             <input
               type="text"
               name="name"
@@ -54,7 +54,7 @@ function Modal({ addUsers, open, onOpen }) {
             />
           </div>
           <div>
-            <label htmlFor="Lastname">نام خانوادگی</label>
+            <label htmlFor="Lastname">نام خانوادگی</label>&nbsp;
             <input
               type="text"
               name="Lastname"
@@ -63,7 +63,7 @@ function Modal({ addUsers, open, onOpen }) {
             />
           </div>
           <div>
-            <label htmlFor="numberCode"> کدملی</label>
+            <label htmlFor="numberCode"> کدملی</label>&nbsp;
             <input
               type="number"
               name="numberCode"
@@ -86,4 +86,4 @@ function Modal({ addUsers, open, onOpen }) {
   );
 }
 
-export default Modal;
+export default ModalAdd;

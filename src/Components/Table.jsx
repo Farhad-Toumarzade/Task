@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Modal from "./Modal";
+import ModalAdd from "./Modal";
+import ModalOne from "./ModalOne";
+import toast from "react-hot-toast";
+// import ModalOne from "./ModalOne";
 
-function Table() {
+function Table({ children }) {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((res) => {
@@ -13,11 +17,41 @@ function Table() {
     });
   }, []);
 
-  const [users, setUsers] = useState({});
+  async function deleteUsers(id) {
+    try {
+      await axios.delete(`http://localhost:5000/users/${id}`);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   const handleAddUsers = (newUsers) => {
     setUsers((prevUsers) => [{ ...prevUsers, newUsers }]);
   };
-  const [isOpen, setIsOpen] = useState(false);
+  // const handleDeleteUsers = (id) => {
+  //   // setRecords((preRec) => preRec.filter((rec) => rec.id !== id));
+  //   const conf = window.confirm("آیا میخواهید حذف شود؟");
+  //   if (conf) {
+  //     axios
+  //       .delete("http://localhost:5000/users")
+  //       .then((res) => {
+  //         toast.success("با موفقیت حذف شد.");
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
+
+  const handleDeleteUsers = async (e, id) => {
+    e.preventDefault();
+    const conf = window.confirm("آیا میخواهید حذف شود؟");
+    if (conf) {
+      await deleteUsers(id);
+      toast.success("با موفقیت حذف شد.");
+    }
+  };
+
+  const [isOpen, setIsOpen] = useState(null);
+  const [isShow, setIsShow] = useState(null);
 
   return (
     <div>
@@ -28,9 +62,10 @@ function Table() {
       <table>
         <thead>
           <tr>
-            {columns.map((c, i) => (
-              <th key={i}>{c}</th>
-            ))}
+            <th>شناسه</th>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>کدملی</th>
 
             <th colSpan={3}>عملیات</th>
           </tr>
@@ -43,39 +78,33 @@ function Table() {
               <td>{d.lastName}</td>
               <td>{d.numberCode}</td>
               <td>
-                <button>مشاهده</button>
+                <ModalOne onShow={setIsShow} show={isShow} title={"مشاهده"}>
+                  {records.map((item) => (
+                    <div key={item.id}>
+                      <span>نام: {item.name}</span>
+                    </div>
+                  ))}
+                </ModalOne>
+                <button onClick={() => setIsShow((s) => !s)}>مشاهده</button>
               </td>
               <td>
                 <button>ویرایش</button>
               </td>
               <td>
-                <button>حذف</button>
+                <button onClick={(e) => handleDeleteUsers(e, d.id)}>حذف</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <Modal addUsers={handleAddUsers} open={isOpen} onOpen={setIsOpen} />
+      <ModalAdd addUsers={handleAddUsers} open={isOpen} onOpen={setIsOpen} />
     </div>
   );
 }
 
 export default Table;
 
-// export function Show() {
-//   const[show,setShow]=useState([])
-
-//   useEffect(()=>{
-//   axios.get('http://localhost:5000/users').then(res=> setShow(res.show)).catch(err => console.log(err);)
-//   },[])
-
-//     return (
-//       <div>
-//           <div>
-//               {}
-//           </div>
-//       </div>
-
-//     )
-//   }
+// function Show() {
+//   return;
+// }

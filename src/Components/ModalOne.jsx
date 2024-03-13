@@ -1,12 +1,12 @@
-import { XCircleIcon } from "@heroicons/react/24/outline";
+// import { XCircleIcon } from "@heroicons/react/24/outline";
 
-function ModalOne({ title, children, open, onOpen }) {
-  if (!open) return null;
+function ModalOne({ title, children, show, onShow }) {
+  if (!show) return null;
 
   return (
-    <div className="details-modal">
-      <div className="details-modal-close" onClick={() => onOpen(false)}>
-        <XCircleIcon />
+    <div className="details-modal" onClick={() => onShow(false)}>
+      <div className="details-modal-close" onClick={() => onShow(false)}>
+        {/* <XCircleIcon /> */}
       </div>
       <div className="details-modal-title">
         <h1>{title}</h1>
