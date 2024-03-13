@@ -3,8 +3,7 @@ import axios from "axios";
 import ModalAdd from "./Modal";
 import ModalOne from "./ModalOne";
 import toast from "react-hot-toast";
-// import ModalOne from "./ModalOne";
-
+import { FaEye, FaEdit, FaRegTrashAlt, FaSearchLocation } from "react-icons/fa";
 function Table({ children }) {
   const [columns, setColumns] = useState([]);
   const [records, setRecords] = useState([]);
@@ -67,7 +66,7 @@ function Table({ children }) {
             <th>نام خانوادگی</th>
             <th>کدملی</th>
 
-            <th colSpan={3}>عملیات</th>
+            <th colSpan={4}>عملیات</th>
           </tr>
         </thead>
         <tbody>
@@ -78,20 +77,32 @@ function Table({ children }) {
               <td>{d.lastName}</td>
               <td>{d.numberCode}</td>
               <td>
-                <ModalOne onShow={setIsShow} show={isShow} title={"مشاهده"}>
+                <ModalOne onShow={setIsShow} show={isShow} title={"مشخصات"}>
                   {records.map((item) => (
                     <div key={item.id}>
                       <span>نام: {item.name}</span>
                     </div>
                   ))}
                 </ModalOne>
-                <button onClick={() => setIsShow((s) => !s)}>مشاهده</button>
+                <button onClick={() => setIsShow((s) => !s)}>
+                  مشاهده &nbsp;
+                  <FaEye />
+                </button>
               </td>
               <td>
-                <button>ویرایش</button>
+                <button>
+                  ویرایش &nbsp; <FaEdit />
+                </button>
               </td>
               <td>
-                <button onClick={(e) => handleDeleteUsers(e, d.id)}>حذف</button>
+                <button onClick={(e) => handleDeleteUsers(e, d.id)}>
+                  حذف &nbsp; <FaRegTrashAlt />
+                </button>
+              </td>
+              <td>
+                <button>
+                  موقعیت مکانی &nbsp; <FaSearchLocation />
+                </button>
               </td>
             </tr>
           ))}
